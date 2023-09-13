@@ -1,0 +1,24 @@
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lints:
+    name: Build
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Homebrew
+      run: |
+        mkdir ~/.homebrew 
+        curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C ~/.homebrew
+        eval "$(homebrew/bin/brew shellenv)"
+        brew update --force --quiet
+        chmod -R go-w "$(brew --prefix)/share/zsh"
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
+    - name: Run `nix build`
+      run: |
+        nix build .  
+      
