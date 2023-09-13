@@ -5,7 +5,7 @@ on:
 
 jobs:
   lints:
-    name: Build
+    name: Build Environment
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
@@ -20,5 +20,16 @@ jobs:
       uses: DeterminateSystems/nix-installer-action@main
     - name: Run `nix build`
       run: |
-        nix build .  
-      
+        nix build . 
+    - name: Setup Tools
+      run: |
+        - name: Dapr tool installer
+        # You may pin to the exact commit or the version.
+        # uses: dapr/setup-dapr@ffde132592c51fcb876dff3925598fd150137569
+          uses: dapr/setup-dapr@v1
+          with:
+            # Version of Dapr CLI to install
+            version: # optional, default is 1.2.0
+
+
+    
